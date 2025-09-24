@@ -1,0 +1,81 @@
+<!-- templates/core/orders.html -->
+{% extends 'base.html' %}
+
+{% block title %}Мои заказы - EcoElite{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-10 mx-auto">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1 class="fw-bold">Мои заказы</h1>
+                <a href="{% url 'create_order' %}" class="btn btn-gold">
+                    <i class="bi bi-plus-circle me-2"></i>Новый заказ
+                </a>
+            </div>
+
+            {% if orders %}
+                <div class="card card-premium">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Номер заказа</th>
+                                        <th>Дата/Время</th>
+                                        <th>Адрес</th>
+                                        <th>Сумма</th>
+                                        <th>Статус</th>
+                                        <th>Действия</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for order in orders %}
+                                        <tr>
+                                            <td><strong>{{ order.order_number }}</strong></td>
+                                            <td>
+                                                {{ order.service_date|date:"d.m.Y" }}<br>
+                                                <small class="text-muted">{{ order.service_time|time:"H:i" }}</small>
+                                            </td>
+                                            <td>{{ order.address.address|truncatewords:3 }}</td>
+                                            <td>{{ order.total_amount }} ₽</td>
+                                            <td>
+                                                {% if order.status == 'new' %}
+                                                    <span class="status-badge status-new">Новый</span>
+                                                {% elif order.status == 'confirmed' %}
+                                                    <span class="status-badge status-confirmed">Подтвержден</span>
+                                                {% elif order.status == 'completed' %}
+                                                    <span class="status-badge status-completed">Завершен</span>
+                                                {% elif order.status == 'cancelled' %}
+                                                    <span class="status-badge status-cancelled">Отменен</span>
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                <a href="{% url 'order_detail' order.order_number %}" 
+                                                   class="btn btn-sm btn-outline-primary">
+                                                    <i class="bi bi-eye"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="card card-premium">
+                    <div class="card-body text-center py-5">
+                        <i class="bi bi-inbox display-1 text-muted"></i>
+                        <h3 class="text-muted mt-3">Заказов пока нет</h3>
+                        <p class="text-muted">Создайте ваш первый заказ на обслуживание</p>
+                        <a href="{% url 'create_order' %}" class="btn btn-gold btn-lg mt-3">
+                            <i class="bi bi-plus-circle me-2"></i>Создать заказ
+                        </a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

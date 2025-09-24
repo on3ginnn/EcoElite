@@ -1,0 +1,66 @@
+<!-- templates/core/services.html -->
+{% extends 'base.html' %}
+
+{% block title %}Услуги - EcoElite{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <h1 class="fw-bold mb-4">Наши услуги</h1>
+            
+            <div class="card card-premium mb-4">
+                <div class="card-body p-4">
+                    <h3 class="card-title text-gold">Базовое обслуживание</h3>
+                    <p class="card-text">Комплексная услуга для регулярного обслуживания резиденций</p>
+                    <ul class="list-unstyled">
+                        <li><i class="bi bi-check-circle-fill text-success me-2"></i>Вакуумная откачка</li>
+                        <li><i class="bi bi-check-circle-fill text-success me-2"></i>Биологическая обработка</li>
+                        <li><i class="bi bi-check-circle-fill text-success me-2"></i>Дезинфекция системы</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card card-premium mb-4">
+                <div class="card-body p-4">
+                    <h3 class="card-title text-gold">Премиум обслуживание</h3>
+                    <p class="card-text">Расширенный пакет с дополнительными опциями</p>
+                    <ul class="list-unstyled">
+                        <li><i class="bi bi-check-circle-fill text-success me-2"></i>Всё из базового пакета</li>
+                        <li><i class="bi bi-check-circle-fill text-success me-2"></i>Экспресс-анализ состава</li>
+                        <li><i class="bi bi-check-circle-fill text-success me-2"></i>Использование премиум-реагентов</li>
+                        <li><i class="bi bi-check-circle-fill text-success me-2"></i>Приоритетное бронирование</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card card-premium">
+                <div class="card-body p-4">
+                    <h3 class="card-title text-gold">Экстренный выезд</h3>
+                    <p class="card-text">Срочное обслуживание в нерабочее время</p>
+                    <ul class="list-unstyled">
+                        <li><i class="bi bi-check-circle-fill text-success me-2"></i>Выезд в течение 2 часов</li>
+                        <li><i class="bi bi-check-circle-fill text-success me-2"></i>Круглосуточная служба</li>
+                        <li><i class="bi bi-check-circle-fill text-success me-2"></i>Максимальная дискретность</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="text-center mt-5">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'create_order' %}" class="btn btn-gold btn-lg">
+                        <i class="bi bi-calendar-plus me-2"></i>Заказать услугу
+                    </a>
+                {% else %}
+                    <a href="{% url 'register' %}" class="btn btn-gold btn-lg me-3">
+                        <i class="bi bi-person-plus me-2"></i>Присоединиться
+                    </a>
+                    <a href="{% url 'login' %}" class="btn btn-outline-dark btn-lg">
+                        <i class="bi bi-box-arrow-in-right me-2"></i>Войти
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

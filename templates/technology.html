@@ -1,0 +1,72 @@
+<!-- templates/core/technology.html -->
+{% extends 'base.html' %}
+
+{% block title %}Технологии - EcoElite{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-10 mx-auto">
+            <h1 class="fw-bold mb-4">Инновационные технологии переработки</h1>
+            
+            <div class="row mb-5">
+                <div class="col-md-6">
+                    <h3 class="text-gold">Биологическая обработка</h3>
+                    <p>Используем специально выращенные штаммы анаэробных и аэробных бактерий, которые ускоренно разлагают органические отходы. Процесс происходит в полностью герметичных реакторах при контролируемой температуре.</p>
+                </div>
+                <div class="col-md-6">
+                    <h3 class="text-gold">Химическая нейтрализация</h3>
+                    <p>Многоступенчатая система фильтрации и обработки экологичными реагентами на основе энзимов обеспечивает полное обеззараживание и устранение запахов. Не используем хлор и другие агрессивные химикаты.</p>
+                </div>
+            </div>
+
+            <div class="card card-premium mb-4">
+                <div class="card-body p-4">
+                    <h4 class="card-title">Этапы переработки</h4>
+                    <div class="row">
+                        <div class="col-md-3 text-center mb-3">
+                            <i class="bi bi-droplet-fill text-primary display-6"></i>
+                            <h6>1. Сепарация</h6>
+                            <small>Разделение на фракции</small>
+                        </div>
+                        <div class="col-md-3 text-center mb-3">
+                            <i class="bi bi-bug-fill text-success display-6"></i>
+                            <h6>2. Биодеградация</h6>
+                            <small>Бактериальная обработка</small>
+                        </div>
+                        <div class="col-md-3 text-center mb-3">
+                            <i class="bi bi-filter-circle-fill text-info display-6"></i>
+                            <h6>3. Фильтрация</h6>
+                            <small>Многоступенчатая очистка</small>
+                        </div>
+                        <div class="col-md-3 text-center mb-3">
+                            <i class="bi bi-shield-check-fill text-warning display-6"></i>
+                            <h6>4. Обеззараживание</h6>
+                            <small>УФ-обработка</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-5">
+                <div class="col-md-6">
+                    <h4>Конечные продукты</h4>
+                    <ul class="list-unstyled">
+                        <li><i class="bi bi-check-circle-fill text-success me-2"></i>Техническая вода (для полива)</li>
+                        <li><i class="bi bi-check-circle-fill text-success me-2"></i>Безопасный ил (для компостирования)</li>
+                        <li><i class="bi bi-check-circle-fill text-success me-2"></i>Нулевой выброс CO₂</li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <h4>Наши преимущества</h4>
+                    <ul class="list-unstyled">
+                        <li><i class="bi bi-star-fill text-warning me-2"></i>Полная автоматизация</li>
+                        <li><i class="bi bi-star-fill text-warning me-2"></i>Удаленный мониторинг</li>
+                        <li><i class="bi bi-star-fill text-warning me-2"></i>Экологическая безопасность</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

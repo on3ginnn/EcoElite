@@ -1,0 +1,87 @@
+<!-- templates/core/order_detail.html -->
+{% extends 'base.html' %}
+
+{% block title %}Заказ {{ order.order_number }} - EcoElite{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1 class="fw-bold">Заказ {{ order.order_number }}</h1>
+                <a href="{% url 'orders' %}" class="btn btn-outline-secondary">
+                    <i class="bi bi-arrow-left me-2"></i>Назад к заказам
+                </a>
+            </div>
+
+            <div class="card card-premium mb-4">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0">Информация о заказе</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>Статус:</strong> 
+                                {% if order.status == 'new' %}
+                                    <span class="status-badge status-new">Новый</span>
+                                {% elif order.status == 'confirmed' %}
+                                    <span class="status-badge status-confirmed">Подтвержден</span>
+                                {% elif order.status == 'completed' %}
+                                    <span class="status-badge status-completed">Завершен</span>
+                                {% elif order.status == 'cancelled' %}
+                                    <span class="status-badge status-cancelled">Отменен</span>
+                                {% endif %}
+                            </p>
+                            <p><strong>Дата создания:</strong> {{ order.created_at|date:"d.m.Y H:i" }}</p>
+                            <p><strong>Дата обслуживания:</strong> {{ order.service_date|date:"d.m.Y" }}</p>
+                            <p><strong>Время обслуживания:</strong> {{ order.service_time|time:"H:i" }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Сумма:</strong> {{ order.total_amount }} ₽</p>
+                            <p><strong>Адрес:</strong> {{ order.address.address }}</p>
+                            {% if order.notes %}
+                                <p><strong>Примечания:</strong> {{ order.notes }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% if order.invoice %}
+            <div class="card card-premium">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0">Финансовая информация</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>Номер счета:</strong> {{ order.invoice.invoice_number }}</p>
+                            <p><strong>Статус оплаты:</strong> 
+                                {% if order.invoice.is_paid %}
+                                    <span class="badge bg-success">Оплачен</span>
+                                {% else %}
+                                    <span class="badge bg-warning">Ожидает оплаты</span>
+                                {% endif %}
+                            </p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Сумма к оплате:</strong> {{ order.invoice.amount }} ₽</p>
+                            {% if order.invoice.is_paid %}
+                                <p><strong>Дата оплаты:</strong> {{ order.invoice.paid_at|date:"d.m.Y H:i" }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% if not order.invoice.is_paid %}
+                        <div class="mt-3">
+                            <button class="btn btn-gold">
+                                <i class="bi bi-credit-card me-2"></i>Оплатить сейчас
+                            </button>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

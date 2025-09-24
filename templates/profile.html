@@ -1,0 +1,143 @@
+<!-- templates/core/profile.html -->
+{% extends 'base.html' %}
+
+{% block title %}Личный кабинет - EcoElite{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <h1 class="fw-bold mb-4">Личный кабинет</h1>
+            
+            <!-- Информация о пользователе -->
+            <div class="card card-premium mb-4">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0"><i class="bi bi-person-circle me-2"></i>Профиль</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>Имя:</strong> {{ user.first_name }} {{ user.last_name }}</p>
+                            <p><strong>Email:</strong> {{ user.email }}</p>
+                            <p><strong>Телефон:</strong> {{ client_profile.phone }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Статус:</strong> 
+                                {% if client_profile.is_verified %}
+                                    <span class="badge bg-success">Верифицирован</span>
+                                {% else %}
+                                    <span class="badge bg-warning">На проверке</span>
+                                {% endif %}
+                            </p>
+                            <p><strong>Дата регистрации:</strong> {{ client_profile.created_at|date:"d.m.Y" }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Адреса обслуживания -->
+            <div class="card card-premium mb-4">
+                <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0"><i class="bi bi-geo-alt me-2"></i>Мои адреса</h5>
+                    <button class="btn btn-sm btn-gold" data-bs-toggle="modal" data-bs-target="#addAddressModal">
+                        <i class="bi bi-plus-circle me-1"></i>Добавить адрес
+                    </button>
+                </div>
+                <div class="card-body">
+                    {% if addresses %}
+                        <div class="row">
+                            {% for address in addresses %}
+                                <div class="col-md-6 mb-3">
+                                    <div class="border rounded p-3">
+                                        <h6>
+                                            {% if address.is_primary %}
+                                                <i class="bi bi-star-fill text-warning me-1"></i>
+                                            {% endif %}
+                                            Адрес #{{ forloop.counter }}
+                                        </h6>
+                                        <p class="mb-1">{{ address.address }}</p>
+                                        {% if address.notes %}
+                                            <small class="text-muted">{{ address.notes }}</small>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p class="text-muted">У вас пока нет добавленных адресов.</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Быстрые действия -->
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <a href="{% url 'create_order' %}" class="card card-premium text-decoration-none h-100">
+                        <div class="card-body text-center">
+                            <i class="bi bi-calendar-plus display-4 text-gold"></i>
+                            <h5>Новый заказ</h5>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <a href="{% url 'orders' %}" class="card card-premium text-decoration-none h-100">
+                        <div class="card-body text-center">
+                            <i class="bi bi-list-ul display-4 text-primary"></i>
+                            <h5>Мои заказы</h5>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card card-premium h-100">
+                        <div class="card-body text-center">
+                            <i class="bi bi-headset display-4 text-success"></i>
+                            <h5>Поддержка</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Модальное окно для добавления адреса -->
+<div class="modal fade" id="addAddressModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Добавить адрес</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form method="post">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Адрес обслуживания</label>
+                        {{ form.address }}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Дополнительные указания</label>
+                        {{ form.notes }}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <button type="submit" class="btn btn-gold">Сохранить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Добавляем классы к полям формы в модальном окне
+        const modalInputs = document.querySelectorAll('#addAddressModal input, #addAddressModal textarea');
+        modalInputs.forEach(input => {
+            input.classList.add('form-control');
+        });
+    });
+</script>
+{% endblock %}

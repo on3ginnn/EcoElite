@@ -1,0 +1,53 @@
+<!-- templates/core/contact.html -->
+{% extends 'base.html' %}
+
+{% block title %}Контакты - EcoElite{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <h1 class="fw-bold mb-4">Свяжитесь с нами</h1>
+            
+            <div class="card card-premium mb-4">
+                <div class="card-body p-4">
+                    <h4 class="text-gold">Для новых клиентов</h4>
+                    <p>Если вы заинтересованы в наших услугах, пожалуйста, зарегистрируйтесь в системе. После регистрации наш менеджер свяжется с вами для уточнения деталей и активации аккаунта.</p>
+                    <a href="{% url 'register' %}" class="btn btn-gold">Зарегистрироваться</a>
+                </div>
+            </div>
+
+            <div class="card card-premium mb-4">
+                <div class="card-body p-4">
+                    <h4 class="text-gold">Для действующих клиентов</h4>
+                    <p>Все вопросы по текущим заказам и обслуживанию решаются через личный кабинет. Это самый быстрый и безопасный способ связи.</p>
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'profile' %}" class="btn btn-gold">Перейти в ЛК</a>
+                    {% else %}
+                        <a href="{% url 'login' %}" class="btn btn-gold">Войти в ЛК</a>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="card card-premium">
+                <div class="card-body p-4">
+                    <h4 class="text-gold">Экстренная связь</h4>
+                    <p>Для срочных вопросов outside рабочего времени:</p>
+                    <ul class="list-unstyled">
+                        <li><i class="bi bi-telephone-fill text-success me-2"></i>+7 (XXX) XXX-XX-XX</li>
+                        <li><i class="bi bi-envelope-fill text-primary me-2"></i>emergency@ecoelite.ru</li>
+                    </ul>
+                    <small class="text-muted">* Номер активируется только для верифицированных клиентов</small>
+                </div>
+            </div>
+
+            <div class="mt-5 text-center">
+                <p class="text-muted">
+                    <i class="bi bi-info-circle me-2"></i>
+                    В целях безопасности мы не публикуем физический адрес офиса. Все встречи проводятся по предварительной договоренности.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
